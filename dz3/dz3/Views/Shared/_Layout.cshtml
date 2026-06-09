@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OrderHub Material-3</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <header class="md-top-app-bar">
+        <div class="md-top-app-bar-container">
+            <a class="md-logo" href="/">
+                <span class="material-symbols-outlined">storefront</span> OrderHub
+            </a>
+            <nav class="md-nav">
+                <a href="/" class="md-nav-link" id="nav-home">
+                    <span class="material-symbols-outlined">home</span> Главная
+                </a>
+                <a href="/Stores" class="md-nav-link" id="nav-stores">
+                    <span class="material-symbols-outlined">store</span> Магазины
+                </a>
+                <a href="/Orders" class="md-nav-link" id="nav-orders">
+                    <span class="material-symbols-outlined">package</span> Заказы
+                </a>
+                <a href="/Reports" class="md-nav-link" id="nav-reports">
+                    <span class="material-symbols-outlined">analytics</span> Отчеты
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - ДЗ №3 по АСОИУ - Вариант 19 - Группа 23 - Material 3 Дизайн</p>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    
+    <script>
+        // Подсвечиваем активный пункт меню на основе текущего пути
+        document.addEventListener("DOMContentLoaded", function () {
+            const path = window.location.pathname;
+            const homeLink = document.getElementById("nav-home");
+            const storesLink = document.getElementById("nav-stores");
+            const ordersLink = document.getElementById("nav-orders");
+            const reportsLink = document.getElementById("nav-reports");
+
+            if (path === "/" || path.toLowerCase() === "/home" || path.toLowerCase() === "/home/index") {
+                homeLink.classList.add("active");
+            } else if (path.toLowerCase().startsWith("/stores")) {
+                storesLink.classList.add("active");
+            } else if (path.toLowerCase().startsWith("/orders")) {
+                ordersLink.classList.add("active");
+            } else if (path.toLowerCase().startsWith("/reports")) {
+                reportsLink.classList.add("active");
+            }
+        });
+    </script>
+</body>
+</html>

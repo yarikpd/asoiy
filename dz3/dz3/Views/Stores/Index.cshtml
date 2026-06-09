@@ -1,0 +1,100 @@
+@model IEnumerable<dz3.Models.Stores>
+
+@{
+    ViewData["Title"] = "Справочник магазинов";
+    string currentSort = ViewBag.CurrentSort as string ?? "";
+}
+
+<div class="md-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="margin-bottom: 0.25rem;">🏪 Справочник магазинов</h1>
+            <p style="margin-bottom: 0;">Управление торговыми точками сети.</p>
+        </div>
+        <a href="/Stores/Create" class="md-btn md-btn-filled">
+            <span class="material-symbols-outlined">add</span> Добавить магазин
+        </a>
+    </div>
+
+    <div class="md-table-container">
+        <table class="md-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">
+                        <a href="/Stores?sort=@ViewBag.IdSort">
+                            ID
+                            @if (string.IsNullOrEmpty(currentSort))
+                            {
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            }
+                            else if (currentSort == "id_desc")
+                            {
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a href="/Stores?sort=@ViewBag.NameSort">
+                            Название магазина
+                            @if (currentSort == "name")
+                            {
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            }
+                            else if (currentSort == "name_desc")
+                            {
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                            }
+                        </a>
+                    </th>
+                    <th style="width: 25%;">
+                        <a href="/Stores?sort=@ViewBag.OrdersCountSort">
+                            Количество заказов
+                            @if (currentSort == "orderscount")
+                            {
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            }
+                            else if (currentSort == "orderscount_desc")
+                            {
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                            }
+                        </a>
+                    </th>
+                    <th style="width: 20%; text-align: right; padding-right: 1.5rem;">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 2rem; color: var(--md-sys-color-on-surface-variant);">
+                            Магазины не найдены. Создайте первый магазин.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td style="font-weight: 500; color: var(--md-sys-color-on-surface);">@item.Name</td>
+                            <td>
+                                <span class="md-badge md-badge-secondary">@item.Orders.Count</span>
+                            </td>
+                            <td style="text-align: right; padding-right: 1.5rem;">
+                                <div class="md-btn-group" style="justify-content: flex-end;">
+                                    <a href="/Stores/Edit/@item.Id" class="md-btn md-btn-tonal md-btn-sm" title="Редактировать">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a>
+                                    <a href="/Stores/Delete/@item.Id" class="md-btn md-btn-danger md-btn-sm" title="Удалить">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+@model dz3.ViewModels.ReportViewModel
+
+@{
+    ViewData["Title"] = "Аналитический отчет";
+}
+
+<div class="md-card">
+    <h1 style="margin-bottom: 0.5rem; color: var(--md-sys-color-primary);">📊 Аналитический отчет</h1>
+    <p>Сводные аналитические разделы по магазинам и заказам.</p>
+
+    <div class="reports-grid">
+        <!-- Раздел 1 -->
+        <div class="md-card md-card-outlined" style="margin-bottom: 0;">
+            <div class="reports-section-title">
+                <span class="material-symbols-outlined">receipt_long</span>
+                Раздел 1: Полный список заказов
+            </div>
+            <p style="font-size: 0.875rem;">Все заказы с названиями магазинов, отсортированные по имени заказа.</p>
+            
+            <div class="md-table-container">
+                <table class="md-table">
+                    <thead>
+                        <tr>
+                            <th>Название заказа</th>
+                            <th>Магазин</th>
+                            <th style="text-align: right;">Сумма заказа</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Report1.Any())
+                        {
+                            <tr>
+                                <td colspan="3" style="text-align: center; padding: 1rem;">Нет данных</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.Report1)
+                            {
+                                <tr>
+                                    <td style="font-weight: 500; color: var(--md-sys-color-on-surface);">@item.OrderName</td>
+                                    <td>
+                                        <span class="md-badge md-badge-secondary">@item.StoreName</span>
+                                    </td>
+                                    <td style="text-align: right; font-weight: 500; color: var(--md-sys-color-primary);">
+                                        @item.Amount.ToString("N2") руб.
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+            <!-- Раздел 2 -->
+            <div class="md-card md-card-outlined" style="margin-bottom: 0;">
+                <div class="reports-section-title">
+                    <span class="material-symbols-outlined">bar_chart</span>
+                    Раздел 2: Количество заказов по магазинам
+                </div>
+                <p style="font-size: 0.875rem;">Группировка количества оформленных заказов по торговым точкам.</p>
+                
+                <div class="md-table-container">
+                    <table class="md-table">
+                        <thead>
+                            <tr>
+                                <th>Магазин</th>
+                                <th style="text-align: right; width: 40%;">Количество</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.Report2.Any())
+                            {
+                                <tr>
+                                    <td colspan="2" style="text-align: center; padding: 1rem;">Нет данных</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.Report2)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--md-sys-color-on-surface);">@item.StoreName</td>
+                                        <td style="text-align: right;">
+                                            <span class="md-badge md-badge-primary">@item.Count шт.</span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Раздел 3 -->
+            <div class="md-card md-card-outlined" style="margin-bottom: 0;">
+                <div class="reports-section-title">
+                    <span class="material-symbols-outlined">payments</span>
+                    Раздел 3: Средний чек по магазинам
+                </div>
+                <p style="font-size: 0.875rem;">Средняя сумма заказа по торговым точкам, отсортированная по убыванию чека.</p>
+                
+                <div class="md-table-container">
+                    <table class="md-table">
+                        <thead>
+                            <tr>
+                                <th>Магазин</th>
+                                <th style="text-align: right; width: 50%;">Средний чек</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.Report3.Any())
+                            {
+                                <tr>
+                                    <td colspan="2" style="text-align: center; padding: 1rem;">Нет данных</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.Report3)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 500; color: var(--md-sys-color-on-surface);">@item.StoreName</td>
+                                        <td style="text-align: right; font-weight: 500; color: var(--md-sys-color-success);">
+                                            @item.AverageAmount.ToString("N2") руб.
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

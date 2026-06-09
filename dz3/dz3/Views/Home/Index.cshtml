@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Панель управления";
+}
+
+
+<div class="dashboard-grid">
+    <a href="/Stores" class="md-card md-card-elevated dashboard-card">
+        <div class="dashboard-card-icon-wrapper">
+            <span class="material-symbols-outlined">store</span>
+        </div>
+        <h3>Магазины</h3>
+        <p>Управление справочником торговых точек (Master-таблица). Просмотр списка, добавление, редактирование и удаление магазинов с валидацией связей.</p>
+        <div style="margin-top: 1.5rem; text-align: right;">
+            <span class="md-btn md-btn-text md-btn-sm">
+                Открыть <span class="material-symbols-outlined">arrow_forward</span>
+            </span>
+        </div>
+    </a>
+
+    <a href="/Orders" class="md-card md-card-elevated dashboard-card">
+        <div class="dashboard-card-icon-wrapper">
+            <span class="material-symbols-outlined">package</span>
+        </div>
+        <h3>Заказы</h3>
+        <p>Управление списком заказов (Detail-таблица). Добавление новых заказов с привязкой к магазинам из выпадающего списка и проверкой суммы заказа.</p>
+        <div style="margin-top: 1.5rem; text-align: right;">
+            <span class="md-btn md-btn-text md-btn-sm">
+                Открыть <span class="material-symbols-outlined">arrow_forward</span>
+            </span>
+        </div>
+    </a>
+
+    <a href="/Reports" class="md-card md-card-elevated dashboard-card">
+        <div class="dashboard-card-icon-wrapper">
+            <span class="material-symbols-outlined">analytics</span>
+        </div>
+        <h3>Отчеты</h3>
+        <p>Аналитические отчеты на основе LINQ to Entities: полный список заказов с названиями магазинов, количество заказов и средний чек по торговым точкам.</p>
+        <div style="margin-top: 1.5rem; text-align: right;">
+            <span class="md-btn md-btn-text md-btn-sm">
+                Открыть <span class="material-symbols-outlined">arrow_forward</span>
+            </span>
+        </div>
+    </a>
+</div>

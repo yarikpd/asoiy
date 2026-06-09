@@ -1,0 +1,35 @@
+@model dz3.Models.Stores
+
+@{
+    ViewData["Title"] = "Редактирование магазина";
+}
+
+<div class="md-detail-container">
+    <div class="md-card">
+        <div class="md-detail-header">
+            <div class="md-detail-header-row">
+                <span class="material-symbols-outlined">edit_square</span>
+                <h2>Редактировать магазин</h2>
+            </div>
+            <p>Измените информацию о магазине.</p>
+        </div>
+
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div class="md-text-field @(ViewData.ModelState["Name"]?.Errors.Any() == true ? "field-validation-error" : "")">
+                <label asp-for="Name">Название магазина</label>
+                <input asp-for="Name" class="md-input @(ViewData.ModelState["Name"]?.Errors.Any() == true ? "input-validation-error" : "")" autocomplete="off" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="md-btn md-btn-filled">
+                    <span class="material-symbols-outlined">save</span> Сохранить
+                </button>
+                <a href="/Stores" class="md-btn md-btn-outlined">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

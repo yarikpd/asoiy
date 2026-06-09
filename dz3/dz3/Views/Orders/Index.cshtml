@@ -1,0 +1,117 @@
+@model IEnumerable<dz3.Models.Orders>
+
+@{
+    ViewData["Title"] = "Список заказов";
+    string currentSort = ViewBag.CurrentSort as string ?? "";
+}
+
+<div class="md-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="margin-bottom: 0.25rem;">📦 Список заказов</h1>
+            <p style="margin-bottom: 0;">Управление списком заказов покупателей.</p>
+        </div>
+        <a href="/Orders/Create" class="md-btn md-btn-filled">
+            <span class="material-symbols-outlined">add</span> Добавить заказ
+        </a>
+    </div>
+
+    <div class="md-table-container">
+        <table class="md-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">
+                        <a href="/Orders?sort=@ViewBag.IdSort">
+                            ID
+                            @if (string.IsNullOrEmpty(currentSort))
+                            {
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            }
+                            else if (currentSort == "id_desc")
+                            {
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a href="/Orders?sort=@ViewBag.NameSort">
+                            Название заказа
+                            @if (currentSort == "name")
+                            {
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            }
+                            else if (currentSort == "name_desc")
+                            {
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                            }
+                        </a>
+                    </th>
+                    <th style="width: 25%;">
+                        <a href="/Orders?sort=@ViewBag.StoreSort">
+                            Магазин
+                            @if (currentSort == "store")
+                            {
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            }
+                            else if (currentSort == "store_desc")
+                            {
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                            }
+                        </a>
+                    </th>
+                    <th style="width: 20%;">
+                        <a href="/Orders?sort=@ViewBag.AmountSort">
+                            Сумма заказа
+                            @if (currentSort == "amount")
+                            {
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            }
+                            else if (currentSort == "amount_desc")
+                            {
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                            }
+                        </a>
+                    </th>
+                    <th style="width: 15%; text-align: right; padding-right: 1.5rem;">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: var(--md-sys-color-on-surface-variant);">
+                            Заказы не найдены. Создайте первый заказ.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td style="font-weight: 500; color: var(--md-sys-color-on-surface);">@item.Name</td>
+                            <td>
+                                <span class="md-chip">
+                                    <span class="material-symbols-outlined" style="font-size: 1.125rem; margin-right: 0.25rem;">store</span>
+                                    @(item.Store != null ? item.Store.Name : "Не указан")
+                                </span>
+                            </td>
+                            <td style="font-weight: 500; color: var(--md-sys-color-primary);">@item.Amount.ToString("N2") руб.</td>
+                            <td style="text-align: right; padding-right: 1.5rem;">
+                                <div class="md-btn-group" style="justify-content: flex-end;">
+                                    <a href="/Orders/Edit/@item.Id" class="md-btn md-btn-tonal md-btn-sm" title="Редактировать">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a>
+                                    <a href="/Orders/Delete/@item.Id" class="md-btn md-btn-danger md-btn-sm" title="Удалить">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

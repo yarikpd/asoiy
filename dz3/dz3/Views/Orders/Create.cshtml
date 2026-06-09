@@ -1,0 +1,48 @@
+@model dz3.Models.Orders
+
+@{
+    ViewData["Title"] = "Новый заказ";
+}
+
+<div class="md-detail-container">
+    <div class="md-card">
+        <div class="md-detail-header">
+            <div class="md-detail-header-row">
+                <span class="material-symbols-outlined">add_box</span>
+                <h2>Добавить заказ</h2>
+            </div>
+            <p>Введите информацию о новом заказе и выберите магазин.</p>
+        </div>
+
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="md-text-field @(ViewData.ModelState["StoreId"]?.Errors.Any() == true ? "field-validation-error" : "")">
+                <label asp-for="StoreId">Магазин</label>
+                <div class="md-select-wrapper">
+                    <select asp-for="StoreId" class="md-input md-select @(ViewData.ModelState["StoreId"]?.Errors.Any() == true ? "input-validation-error" : "")" asp-items="ViewBag.StoreId"></select>
+                </div>
+                <span asp-validation-for="StoreId" class="text-danger"></span>
+            </div>
+
+            <div class="md-text-field @(ViewData.ModelState["Name"]?.Errors.Any() == true ? "field-validation-error" : "")">
+                <label asp-for="Name">Название заказа</label>
+                <input asp-for="Name" class="md-input @(ViewData.ModelState["Name"]?.Errors.Any() == true ? "input-validation-error" : "")" placeholder="Введите название заказа" autocomplete="off" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="md-text-field @(ViewData.ModelState["Amount"]?.Errors.Any() == true ? "field-validation-error" : "")">
+                <label asp-for="Amount">Сумма заказа (руб.)</label>
+                <input asp-for="Amount" class="md-input @(ViewData.ModelState["Amount"]?.Errors.Any() == true ? "input-validation-error" : "")" type="number" step="0.01" min="0" placeholder="0.00" autocomplete="off" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="md-btn md-btn-filled">
+                    <span class="material-symbols-outlined">save</span> Сохранить
+                </button>
+                <a href="/Orders" class="md-btn md-btn-outlined">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

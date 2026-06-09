@@ -1,0 +1,70 @@
+@model dz3.Models.Stores
+
+@{
+    ViewData["Title"] = "Удаление магазина";
+    bool hasOrders = Model.Orders.Any();
+}
+
+<div class="md-detail-container">
+    <div class="md-card" style="border-color: var(--md-sys-color-error);">
+        <div class="md-detail-header">
+            <div class="md-detail-header-row" style="color: var(--md-sys-color-error);">
+                <span class="material-symbols-outlined">delete_forever</span>
+                <h2 style="color: var(--md-sys-color-error);">Удалить магазин?</h2>
+            </div>
+            <p>Вы собираетесь удалить следующую запись из справочника магазинов.</p>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <div style="display: flex; margin-bottom: 0.75rem;">
+                <div style="width: 30%; color: var(--md-sys-color-on-surface-variant); font-weight: 500;">ID</div>
+                <div style="width: 70%; color: var(--md-sys-color-on-surface);">@Model.Id</div>
+            </div>
+            <div style="display: flex; margin-bottom: 0.75rem;">
+                <div style="width: 30%; color: var(--md-sys-color-on-surface-variant); font-weight: 500;">Название</div>
+                <div style="width: 70%; color: var(--md-sys-color-on-surface); font-weight: 500;">@Model.Name</div>
+            </div>
+            <div style="display: flex;">
+                <div style="width: 30%; color: var(--md-sys-color-on-surface-variant); font-weight: 500;">Связанные заказы</div>
+                <div style="width: 70%;">
+                    <span class="md-badge md-badge-secondary">@Model.Orders.Count записей</span>
+                </div>
+            </div>
+        </div>
+
+        @if (hasOrders)
+        {
+            <div class="md-delete-warning">
+                <span class="material-symbols-outlined">warning</span>
+                <div>
+                    <strong>Внимание!</strong> Невозможно удалить данный магазин, так как с ним связаны заказы в основной таблице (@Model.Orders.Count шт.). 
+                    Сначала удалите или переназначьте эти заказы.
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="md-delete-warning" style="background-color: rgba(242, 184, 181, 0.04); border-color: var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant);">
+                <span class="material-symbols-outlined">info</span>
+                <div>
+                    Подтвердите удаление. Это действие необратимо.
+                </div>
+            </div>
+        }
+
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                @if (!hasOrders)
+                {
+                    <button type="submit" class="md-btn md-btn-danger">
+                        <span class="material-symbols-outlined">delete</span> Удалить
+                    </button>
+                }
+                <a href="/Stores" class="md-btn md-btn-outlined">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+@model dz3.Models.Orders
+
+@{
+    ViewData["Title"] = "Удаление заказа";
+}
+
+<div class="md-detail-container">
+    <div class="md-card" style="border-color: var(--md-sys-color-error);">
+        <div class="md-detail-header">
+            <div class="md-detail-header-row" style="color: var(--md-sys-color-error);">
+                <span class="material-symbols-outlined">delete_forever</span>
+                <h2 style="color: var(--md-sys-color-error);">Удалить заказ?</h2>
+            </div>
+            <p>Вы собираетесь удалить следующую запись из таблицы заказов.</p>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <div style="display: flex; margin-bottom: 0.75rem;">
+                <div style="width: 30%; color: var(--md-sys-color-on-surface-variant); font-weight: 500;">ID</div>
+                <div style="width: 70%; color: var(--md-sys-color-on-surface);">@Model.Id</div>
+            </div>
+            <div style="display: flex; margin-bottom: 0.75rem;">
+                <div style="width: 30%; color: var(--md-sys-color-on-surface-variant); font-weight: 500;">Название</div>
+                <div style="width: 70%; color: var(--md-sys-color-on-surface); font-weight: 500;">@Model.Name</div>
+            </div>
+            <div style="display: flex; margin-bottom: 0.75rem;">
+                <div style="width: 30%; color: var(--md-sys-color-on-surface-variant); font-weight: 500;">Магазин</div>
+                <div style="width: 70%; color: var(--md-sys-color-on-surface);">
+                    @(Model.Store != null ? Model.Store.Name : "Не указан")
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 0.75rem;">
+                <div style="width: 30%; color: var(--md-sys-color-on-surface-variant); font-weight: 500;">Сумма</div>
+                <div style="width: 70%; color: var(--md-sys-color-primary); font-weight: 500;">@Model.Amount.ToString("N2") руб.</div>
+            </div>
+        </div>
+
+        <div class="md-delete-warning">
+            <span class="material-symbols-outlined">info</span>
+            <div>
+                Подтвердите удаление этого заказа. Это действие нельзя будет отменить.
+            </div>
+        </div>
+
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button type="submit" class="md-btn md-btn-danger">
+                    <span class="material-symbols-outlined">delete</span> Удалить
+                </button>
+                <a href="/Orders" class="md-btn md-btn-outlined">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
